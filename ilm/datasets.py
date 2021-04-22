@@ -10,7 +10,45 @@ class Dataset(Enum):
   ROC_STORIES = 2
   ROC_STORIES_NO_TITLE = 3
   LYRICS_STANZAS = 4
+  YELP_REVIEWS = 5
 
+YELP_DIR = os.path.join(RAW_DATA_DIR, 'yelp_review')
+def yelp_review(split='train', data_dir=None,attrs=['id', 'star', 'useful', 'text']):
+    assert split in ['train', 'valid', 'test']
+
+    if data_dir is None:
+     data_dir = YELP_DIR
+
+    reviews=[]
+
+    def compress(f):
+      review=[]
+      for r in f.read().split('\n\n\n'):
+        try:
+          id, star, useful, text = r.split('\n', 3)
+        except:
+          print(r)
+          continue
+        a = []
+        for attr_name in attrs:
+          a.append(eval(attr_name))
+        a = '\n'.join(a)
+        review.append(a)
+      return review
+        
+    if split == 'train':
+        with open(os.path.join(data_dir, 'yelp_review_train.txt'), 'r') as f:
+            reviews=compress(f)
+    elif split == 'valid':
+        with open(os.path.join(data_dir, 'yelp_review_valid.txt'), 'r') as f:
+            reviews=compress(f)
+    elif split == 'test':
+        with open(os.path.join(data_dir, 'yelp_review_test.txt'), 'r') as f:
+            reviews=compress(f)
+    else:
+        assert False
+    
+    return reviews
 
 def get_dataset(dataset, split, *args, data_dir=None, shuffle=False, limit=None, **kwargs):
   if type(dataset) != Dataset:
@@ -31,6 +69,8 @@ def get_dataset(dataset, split, *args, data_dir=None, shuffle=False, limit=None,
     if data_dir is None:
       data_dir = os.path.join(RAW_DATA_DIR, 'lyrics_stanzas')
     d = custom(split, data_dir=data_dir)
+  elif dataset == Dataset.YELP_REVIEWS:
+    d = yelp_review(split, *args, data_dir=data_dir, **kwargs)
   else:
     assert False
 
