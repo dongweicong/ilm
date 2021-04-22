@@ -7,6 +7,7 @@ python train_ilm.py \
 	${EXAMPLES_DIR} \
 	--seed 0 \
 	--wandb \
+	--wandb_project_name 'yelp_ilm'
 	--train_examples_tag train \
 	--eval_examples_tag valid \
 	--eval_max_num_examples 512
