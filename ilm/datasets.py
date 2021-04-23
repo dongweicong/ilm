@@ -14,7 +14,7 @@ class Dataset(Enum):
   CLOTH_REVIEWS = 6
 
 CLOTH_DIR = os.path.join(RAW_DATA_DIR, 'cloth_review')
-def yelp_review(split='train', data_dir=None):
+def cloth_review(split='train', data_dir=None):
 	assert split in ['train', 'valid', 'test']
 
 	if data_dir is None:
