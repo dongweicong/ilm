@@ -1,5 +1,5 @@
 DATASET=roc_stories
-TRAIN_DIR=../drive/train_story_ilm
+TRAIN_DIR=../drive/Shareddrives/cos484/train_story_ilm
 EXAMPLES_DIR=data/char_masks/${DATASET}
 python train_ilm.py \
 	experiment_${DATASET} \
