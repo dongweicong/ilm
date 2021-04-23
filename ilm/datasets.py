@@ -23,11 +23,10 @@ def cloth_review(split='train', data_dir=None):
 	reviews=[]
 
 	def compress(f):
-	  review=[]
-	  for r in f.read().split('\n\n\n'):
-
-		review.append(r)
-	  return review
+		review=[]
+		for r in f.read().split('\n\n\n'):
+			review.append(r)
+		return review
 
 	if split == 'train':
 		with open(os.path.join(data_dir, 'cloth_review_train.txt'), 'r') as f:
